@@ -27,5 +27,12 @@ public final class Constants {
 	public static final int XBOX_RIGHT_JOYSTICK_X_AXIS = 9;
 
 
+	//Intake Motor ID
+	public static final int SPARK_MOTOR_ID = 2;
+	public static final double INTAKE_MOTOR_SPEED_A = 0.25;
+	public static final double INTAKE_MOTOR_SPEED_B = -0.25;
+
+
+
 
 }

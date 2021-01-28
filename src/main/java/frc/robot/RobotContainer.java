@@ -7,7 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.runIntake;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -20,6 +23,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   DriveTrain m_drive = new DriveTrain();
+  Arm m_arm = new Arm();
   XboxController m_controller = new XboxController(Constants.XBOX_CONTROLLER_PORT);
 
 
@@ -38,7 +42,15 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+
+    Trigger a_button = new Trigger(m_controller::getAButton);
+    Trigger b_button = new Trigger(m_controller::getBButton);
+    
+    a_button.whileActiveContinuous(new runIntake(m_arm, m_controller));
+    b_button.whileActiveContinuous(new runIntake(m_arm, m_controller));
+
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

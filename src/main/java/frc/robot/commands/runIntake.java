@@ -7,18 +7,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Arm;
 
-public class ArcadeDrive extends CommandBase {
-  
-  DriveTrain m_drive;
+public class runIntake extends CommandBase {
+
+  Arm m_arm;
   XboxController m_controller;
 
-  public ArcadeDrive(DriveTrain subsystem, XboxController controller) {
+  /** Creates a new runIntake. */
+  public runIntake(Arm subsystem, XboxController controller) {
     // Use addRequirements() here to declare subsystem dependencies.
+
     addRequirements(subsystem);
-    m_drive = subsystem;
-    m_controller = controller;
+    m_controller = controller;  
 
   }
 
@@ -30,7 +31,19 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
 
-    m_drive.setDriveMotors(m_controller.getRawAxis(Constants.XBOX_LEFT_JOYSTICK_Y_AXIS), m_controller.getRawAxis(Constants.XBOX_RIGHT_JOYSTICK_X_AXIS));
+    while(m_controller.getAButton()) {
+
+      m_arm.runIntake(Constants.INTAKE_MOTOR_SPEED_A);
+
+    }
+
+    while(m_controller.getBButton()) {
+
+      m_arm.runIntake(Constants.INTAKE_MOTOR_SPEED_B);
+
+    }
+
+
 
   }
 
@@ -38,15 +51,13 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void end(boolean interrupted) {
 
-    m_drive.setDriveMotors(0, 0);
+    m_arm.runIntake(0);
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
     return false;
-    
   }
 }
